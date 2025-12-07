@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <title>Anxietea - Find a Professionals</title>
+    <style>
+:root {
+  --accent: #1a0802;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, sans-serif;
+  background: #1a1a1a url(cliff.jpg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #c5c7ce;
+  position: relative;
+  padding-top: 70px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 15px;
+  min-height: 60px;
+  box-sizing: border-box;
+}
+
+.header-logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.header-nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.header .nav-btn {
+  padding: 10px 20px;
+  background: rgba(44, 3, 3, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.header .nav-btn:hover {
+  background: rgba(44, 3, 3, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.header .nav-btn.active {
+  background: rgba(44, 3, 3, 1);
+}
+
+/* Dropdown Menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  padding: 8px 16px;
+  background: rgba(44, 3, 3, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dropdown-btn:hover {
+  background: rgba(44, 3, 3, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-btn.active {
+  background: rgba(44, 3, 3, 1);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  min-width: 150px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1001;
+  padding: 5px 0;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.dropdown-item.active {
+  background: rgba(26, 8, 2, 0.3);
+  color: #fff;
+}
+
+.menu-toggle {
+  display: none;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 12px 15px;
+  }
+  
+  .header-logo {
+    font-size: 1.2rem;
+  }
+  
+  .menu-toggle {
+    display: flex;
+    flex-shrink: 0;
+    z-index: 1001;
+  }
+  
+  .header-nav {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  .header-nav.active {
+    transform: translateX(0);
+  }
+  
+  .header .nav-btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+  }
+  
+  .dropdown {
+    width: 100%;
+  }
+  
+  .dropdown-btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+  
+  .dropdown-menu {
+    position: static;
+    width: 100%;
+    margin-top: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: none;
+    margin-top: 10px;
+  }
+  
+  .dropdown-menu.active {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
+  
+  .header-nav {
+    display: flex !important;
+    position: static;
+    transform: none;
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 60px;
+  }
+}
+
+.therapist-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.therapist-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.therapist-title {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.therapist-subtitle {
+  color: #c5c7ce;
+  font-size: 1.1rem;
+}
+
+.therapist-controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 15px 12px 45px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+  border-color: var(--accent);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.search-box::before {
+  content: '🔍';
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.therapists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.therapist-card {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.therapist-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.therapist-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.therapist-info {
+  padding: 20px;
+}
+
+.therapist-name {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.therapist-specialty {
+  color: #ff824f;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.therapist-details {
+  margin-bottom: 15px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: #c5c7ce;
+  font-size: 0.9rem;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-icon {
+  font-size: 1rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.detail-text {
+  flex: 1;
+  line-height: 1.5;
+}
+
+.therapist-source {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(138, 43, 226, 0.2);
+  border: 1px solid rgba(138, 43, 226, 0.4);
+  border-radius: 4px;
+  color: #c5c7ce;
+  font-size: 0.75rem;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.therapist-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-book,
+.btn-contact {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-book {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-book:hover {
+  background: #ff824f;
+  transform: translateY(-2px);
+}
+
+.btn-contact {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-contact:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .therapist-container {
+    padding: 30px 15px;
+  }
+  
+  .therapist-title {
+    font-size: 2rem;
+  }
+  
+  .therapist-controls {
+    flex-direction: column;
+  }
+  
+  .search-box {
+    width: 100%;
+  }
+  
+  .filter-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .therapists-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  .therapist-image {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .therapists-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+    </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="index.html" class="header-logo">Anxietea</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    <nav class="header-nav" id="headerNav">
+      <a href="index.html" class="nav-btn">Home</a>
+      <a href="stories.html" class="nav-btn">Stories</a>
+      <a href="marketplace.html" class="nav-btn">Marketplace</a>
+      <a href="share.html" class="nav-btn">Share</a>
+      <a href="therapist.html" class="nav-btn active">Therapist</a>
+      <a href="donate.html" class="nav-btn">Give Hope</a>
+      <div class="dropdown">
+        <button class="dropdown-btn" id="accountDropdown">Account ▼</button>
+        <div class="dropdown-menu" id="accountMenu">
+          <a href="about.html" class="dropdown-item">About</a>
+          <a href="settings.html" class="dropdown-item">Settings</a>
+          <a href="login.html" class="dropdown-item">Login</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="therapist-container">
+    <div class="therapist-header">
+      <h1 class="therapist-title">Find a Mental Health Professional</h1>
+      <p class="therapist-subtitle">Connect with professionals</p>
+    </div>
+
+
+    <div class="therapist-controls">
+      
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="psychologist">Psychologist</button>
+        <button class="filter-btn" data-filter="psychiatrist">Psychiatrist</button>
+        <button class="filter-btn" data-filter="counselor">Counselor</button>
+        <button class="filter-btn" data-filter="therapist">Therapist</button>
+      </div>
+    </div>
+
+
+    <div class="therapists-grid" id="therapistsGrid">
+
+
+      <div class="therapist-card" data-category="psychologist" data-source="manila">
+        <img src="dr. donnies.jpg" alt="Dr. Donnies Bendicio" class="therapist-image">
+        <div class="therapist-info">
+          <h3 class="therapist-name">Dr. Donnies Bendicio</h3>
+          <p class="therapist-specialty">Clinical Psychologist</p>
+          <span class="therapist-source">Manila</span>
+          <div class="therapist-details">
+            <div class="detail-item">              
+              <span class="detail-text">Makati, Metro Manila</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-text">Ph.D. in Clinical Psychology, UP Diliman</span>
+            </div>
+            <div class="detail-item">              
+              <span class="detail-text">11 years experience</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-text">Specializes in anxiety management and mindfulness-based therapy. Note. I cannot prescribe medication, I only provide therapy session</span>
+            </div>
+          </div>
+          <div class="therapist-actions">
+            <button class="btn-book">Book Online/Face to face Session</button>
+            <button class="btn-contact">Contact</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="therapist-card" data-category="psychiatrist" data-source="doctor-anywhere">
+        <img src="552771026_698520866170928_2028963492161434814_n.jpg" alt="Dr. Marc Tesico" class="therapist-image">
+        <div class="therapist-info">
+          <h3 class="therapist-name">Dr. Marc Tesico</h3>
+          <p class="therapist-specialty">Psychiatrist</p>
+          <span class="therapist-source" style="background: rgba(0, 123, 255, 0.2); border-color: rgba(0, 123, 255, 0.4);">Doctor Anywhere</span>
+          <div class="therapist-details">
+            <div class="detail-item">
+              <span class="detail-text">Online/Face to face Consultation Available</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-text">MD, Psychiatry, UST</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-text">12+ years experience</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-text">A Clinical Psychiatrist. Note. This psychiatrist only handles medication prescription during ONSITE(in person )meeting only at The Medical City Psychiatric Clinic.</span>
+            </div>
+          </div>
+          <div class="therapist-actions">
+            <button class="btn-book">Book Online/Face to face Session</button>
+            <button class="btn-contact">Contact</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="therapist-card" data-category="counselor" data-source="manila">
+        <img src="575433242_32112254731753896_8654100109584050175_n.png" alt="Mr. Lanz Paolo Olegario" class="therapist-image">
+        <div class="therapist-info">
+          <h3 class="therapist-name">Mr. Paolo Olegario, Rpsy</h3>
+          <p class="therapist-specialty">Licensed Counselor, Psychologist</p>
+          <span class="therapist-source">Manila</span>
+          <div class="therapist-details">
+            <div class="detail-item">
+              <span class="detail-text">Quezon City, Metro Manila</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-text">MA in Counseling Psychology, Ateneo</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-text">5 years experience</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-text">Registered Psychologist dedicated to providing compassionate and evidence-based mental health care.</span>
+            </div>
+          </div>
+          <div class="therapist-actions">
+            <button class="btn-book">Book Online/Face to face Session</button>
+            <button class="btn-contact">Contact</button>
+          </div>
+        </div>
+      </div>
+
+    
+
+<script>
+(function() {
+  const menuToggle = document.getElementById('menuToggle');
+  const headerNav = document.getElementById('headerNav');
+  
+  if (menuToggle && headerNav) {
+    menuToggle.addEventListener('click', function() {
+      headerNav.classList.toggle('active');
+    });
+    
+    document.addEventListener('click', function(event) {
+      if (!menuToggle.contains(event.target) && !headerNav.contains(event.target)) {
+        headerNav.classList.remove('active');
+      }
+    });
+    
+    const navLinks = headerNav.querySelectorAll('.nav-btn');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 768) {
+          headerNav.classList.remove('active');
+        }
+      });
+    });
+  }
+})();
+
+
+(function() {
+  const dropdownBtn = document.getElementById('accountDropdown');
+  const dropdownMenu = document.getElementById('accountMenu');
+  
+  if (dropdownBtn && dropdownMenu) {
+    dropdownBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle('active');
+      dropdownBtn.classList.toggle('active');
+    });
+    
+    document.addEventListener('click', function(event) {
+      if (!dropdownBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.remove('active');
+        dropdownBtn.classList.remove('active');
+      }
+    });
+    
+    const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', function() {
+        dropdownMenu.classList.remove('active');
+        dropdownBtn.classList.remove('active');
+      });
+    });
+  }
+})();
+
+
+const filterButtons = document.querySelectorAll('.filter-btn');
+const therapistCards = document.querySelectorAll('.therapist-card');
+const searchInput = document.getElementById('searchInput');
+
+filterButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    this.classList.add('active');
+    
+    const filter = this.getAttribute('data-filter');
+    
+    therapistCards.forEach(card => {
+      if (filter === 'all' || card.getAttribute('data-category') === filter) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
+
+
+searchInput.addEventListener('input', function() {
+  const searchTerm = this.value.toLowerCase();
+  
+  therapistCards.forEach(card => {
+    const name = card.querySelector('.therapist-name').textContent.toLowerCase();
+    const specialty = card.querySelector('.therapist-specialty').textContent.toLowerCase();
+    const details = card.querySelector('.therapist-details').textContent.toLowerCase();
+    
+    if (name.includes(searchTerm) || specialty.includes(searchTerm) || details.includes(searchTerm)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+});
+</script>
+    
+</body>
+</html>
+
+<footer style="text-align: center; padding: 15px; background: transparent; color: #ccc; font-size: 0.9rem; margin-top: 40px;">
+  <p> 2025 AnxieTea — A space for calm minds. Find you answers HERE</p>
+</footer>

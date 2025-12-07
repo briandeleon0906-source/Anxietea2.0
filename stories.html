@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <title>Anxietea - Stories</title>
+    <style>
+:root {
+  --accent: #1a0802;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, sans-serif;
+  background: #1a1a1a url(cliff.jpg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #c5c7ce;
+  position: relative;
+  padding-top: 70px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Responsive Header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 15px;
+  min-height: 60px;
+  box-sizing: border-box;
+}
+
+.header-logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.header-nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.header .nav-btn {
+  padding: 10px 20px;
+  background: rgba(44, 3, 3, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.header .nav-btn:hover {
+  background: rgba(44, 3, 3, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.header .nav-btn.active {
+  background: rgba(44, 3, 3, 1);
+}
+
+/* Dropdown Menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  padding: 8px 16px;
+  background: rgba(44, 3, 3, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dropdown-btn:hover {
+  background: rgba(44, 3, 3, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-btn.active {
+  background: rgba(44, 3, 3, 1);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  min-width: 150px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1001;
+  padding: 5px 0;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.dropdown-item.active {
+  background: rgba(26, 8, 2, 0.3);
+  color: #fff;
+}
+
+/* Mobile menu toggle */
+.menu-toggle {
+  display: none;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive header styles */
+@media (max-width: 768px) {
+  .header {
+    padding: 12px 15px;
+  }
+  
+  .header-logo {
+    font-size: 1.2rem;
+  }
+  
+  .menu-toggle {
+    display: flex;
+    flex-shrink: 0;
+    z-index: 1001;
+  }
+  
+  .header-nav {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  .header-nav.active {
+    transform: translateX(0);
+  }
+  
+  .header .nav-btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+  }
+  
+  .dropdown {
+    width: 100%;
+  }
+  
+  .dropdown-btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+  
+  .dropdown-menu {
+    position: static;
+    width: 100%;
+    margin-top: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: none;
+    margin-top: 10px;
+  }
+  
+  .dropdown-menu.active {
+    display: block;
+  }
+}
+
+/* Desktop: Hide menu toggle, show nav */
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
+  
+  .header-nav {
+    display: flex !important;
+    position: static;
+    transform: none;
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    padding: 0;
+  }
+}
+
+/* Body padding for fixed header */
+@media (max-width: 768px) {
+  body {
+    padding-top: 60px;
+  }
+}
+
+/* Stories Container */
+.stories-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.stories-header {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Story Post */
+.story-post {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.story-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.story-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.story-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.story-name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.story-date {
+  color: #999;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.story-title {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.story-content {
+  color: #c5c7ce;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.story-content p {
+  margin-bottom: 15px;
+}
+
+.story-content p:last-child {
+  margin-bottom: 0;
+}
+
+.story-image {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .stories-container {
+    padding: 30px 15px;
+  }
+  
+  .stories-header {
+    font-size: 1.5rem;
+  }
+  
+  .story-post {
+    padding: 20px;
+  }
+  
+  .story-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .story-date {
+    align-self: flex-end;
+  }
+  
+  .story-title {
+    font-size: 1.3rem;
+  }
+  
+  .story-content {
+    font-size: 0.95rem;
+  }
+}
+
+    </style>
+</head>
+<body>
+
+  <!-- Responsive Header -->
+  <header class="header">
+    <a href="index.html" class="header-logo">Anxietea</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    <nav class="header-nav" id="headerNav">
+      <a href="index.html" class="nav-btn">Home</a>
+      <a href="stories.html" class="nav-btn active">Stories</a>
+      <a href="marketplace.html" class="nav-btn">Marketplace</a>
+      <a href="share.html" class="nav-btn">Share</a>
+      <a href="therapist.html" class="nav-btn">Therapist</a>
+      <a href="donate.html" class="nav-btn">Give Hope</a>
+      <div class="dropdown">
+        <button class="dropdown-btn" id="accountDropdown">Account ▼</button>
+        <div class="dropdown-menu" id="accountMenu">
+          <a href="about.html" class="dropdown-item">About</a>
+          <a href="settings.html" class="dropdown-item">Settings</a>
+          <a href="login.html" class="dropdown-item">Login</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="stories-container">
+    <h1 class="stories-header">Stories</h1>
+
+    <!-- Story 1 -->
+    <article class="story-post">
+      <div class="story-header">
+        <div class="story-user">
+          <img src="pogi.jpg" alt="Uno" class="story-avatar">
+          <span class="story-name">Uno D.</span>
+        </div>
+        <div class="story-date">
+          <span>Nov 27, 2025</span>
+          <span>;)</span>
+        </div>
+      </div>
+      <h2 class="story-title">Catch-Up + Night Time</h2>
+      <div class="story-content">
+        <p>It's been too long 😊 but I wanted to catch up to say that last night I woke up to a racing heart. This particular episode of adrenaline isn't new - I've been navigating on and off episodes for a year now. I was deeply uncomfortable but I made it through, and I think it's from all the conditioning I've done to build a relationship with myself and my anxiety.</p>
+        <p>Although I strongly don't like these episodes, I've been trying to lean into curiosity instead of fear. A while ago my therapist was telling me to approach my experiences as a researcher instead of a critic; I can be curious about my panic attacks rather then criticize them.</p>
+        <p>But overall, I will say I've been doing very well. I'm going to School alone sometime with my friends, I walk at night alone, I attended an seminar for anxiey, and I've sat through some panicked moments. These moments remind me that I CAN do it, and you can too ❤️🥳</p>
+        <p>Also a photo of some plants from my walk today!</p>
+      </div>
+      <img src="fam.jpg" alt="With fam" class="story-image">
+    </article>
+
+    <!-- Story 2 -->
+    <article class="story-post">
+      <div class="story-header">
+        <div class="story-user">
+          <img src="bruno.jpg" alt="Darren O." class="story-avatar">
+          <span class="story-name">Mr. Bean</span>
+        </div>
+        <div class="story-date">
+          <span>Dec 5, 2025</span>
+          <span>✈️</span>
+        </div>
+      </div>
+      <h2 class="story-title">Facing My Fears Head On</h2>
+      <div class="story-content">
+        <p>The anxiety is still there, but I'm learning that it doesn't have to control me. Every small step forward is a victory. The train ride itself felt like an accomplishment, and I'm proud of myself for not letting fear stop me from living my life.</p>
+        <p>To anyone else struggling - you're not alone. We can do hard things, even when it feels impossible. One moment at a time, one breath at a time.</p>
+      </div>
+      <img src="Brunobusking.jpg" alt="Train journey" class="story-image">
+    </article>
+
+    <!-- Story 3 -->
+    <article class="story-post">
+      <div class="story-header">
+        <div class="story-user">
+          <img src="pogi.jpg" alt="Uno D." class="story-avatar">
+          <span class="story-name">Uno D.</span>
+        </div>
+        <div class="story-date">
+          <span>Dec 7, 2025</span>
+          <span>🤔</span>
+        </div>
+      </div>
+      <h2 class="story-title">Sir nasira hard drive ko</h2>
+      <div class="story-content">
+        <p>Sir bumili pa ako at nag palit ng hard drive </p>
+        <p>buti nalang talaga nase-save auto sa vscode kinabahan ako</p>
+      </div>
+      <img src="laptopsira.jpg" alt="Support" class="story-image">
+    </article>
+
+    <!-- Story 4 -->
+    <article class="story-post">
+      <div class="story-header">
+        <div class="story-user">
+          <img src="pogi.jpg" alt="Uno D." class="story-avatar">
+          <span class="story-name">Uno D.</span>
+        </div>
+        <div class="story-date">
+          <span>November 2025</span>
+          <span>✈️</span>
+        </div>
+      </div>
+      <h2 class="story-title">Small Wins Matter</h2>
+      <div class="story-content">
+        <p>Today I did something that might seem small to others, but it was huge for me. Ive done my speech without having a panic attack. This might not sound like much, but for someone who's havinganxiety, it's everything.</p>
+        <p>I've been working with my therapist on exposure therapy, and it's been challenging. But moments like today remind me why it's worth it. The fear doesn't disappear, but I'm learning to live alongside it.</p>
+        <p>If you're reading this and feeling stuck, know that small steps count. You don't have to do everything at once. Celebrate the small wins - they add up to big changes over time.</p>
+        <p>Thank you to everyone. Your courage inspires me to keep going.</p>
+      </div>
+      <img src="aqntncepic.jpg"Coffee shop" class="story-image">
+    </article>
+
+    <!-- Story 5 -->
+    <article class="story-post">
+      <div class="story-header">
+        <div class="story-user">
+          <img src="sadboi.jpg" alt=" Miel." class="story-avatar">
+          <span class="story-name">Miel.</span>
+        </div>
+        <div class="story-date">
+          <span>Nov 28, 2025</span>
+          <span>✈️</span>
+        </div>
+      </div>
+      <h2 class="story-title">Learning to Breathe Through It</h2>
+      <div class="story-content">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dicta a itaque consectetur quaerat eligendi odio in laborum voluptas corporis! Laborum aperiam a nemo magnam laboriosam quisquam. Esse, tenetur aut.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dicta a itaque consectetur quaerat eligendi odio in laborum voluptas corporis! Laborum aperiam a nemo magnam laboriosam quisquam. Esse, tenetur aut.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dicta a itaque consectetur quaerat eligendi odio in laborum voluptas corporis! Laborum aperiam a nemo magnam laboriosam quisquam. Esse, tenetur aut.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+      </div>
+      <img src="malupiton.jpg" alt="Calm moment" class="story-image">
+    </article>
+
+    <!-- Story 6 -->
+    <article class="story-post">
+      <div class="story-header">
+        <div class="story-user">
+          <img src="monggoloid2.jpg" alt="Sarah K." class="story-avatar">
+          <span class="story-name">Uno D.</span>
+        </div>
+        <div class="story-date">
+          <span>Dec 7, 2025</span>
+          <span>📚</span>
+        </div>
+      </div>
+      <h2 class="story-title">I recommend you this book</h2>
+      <div class="story-content">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dicta a itaque consectetur quaerat eligendi odio in laborum voluptas corporis! Laborum aperiam a nemo magnam laboriosam quisquam. Esse, tenetur aut.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid dicta a itaque consectetur quaerat eligendi odio in laborum voluptas corporis! Laborum aperiam a nemo magnam laboriosam quisquam. Esse, tenetur aut.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+      </div>
+      <img src="atomichabits.jpg" alt="Growth journey" class="story-image">
+    </article>
+
+  </div>
+
+<script>
+
+(function() {
+  const menuToggle = document.getElementById('menuToggle');
+  const headerNav = document.getElementById('headerNav');
+  
+  if (menuToggle && headerNav) {
+    menuToggle.addEventListener('click', function() {
+      headerNav.classList.toggle('active');
+    });
+    
+
+    document.addEventListener('click', function(event) {
+      if (!menuToggle.contains(event.target) && !headerNav.contains(event.target)) {
+        headerNav.classList.remove('active');
+      }
+    });
+    
+    
+    const navLinks = headerNav.querySelectorAll('.nav-btn');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 768) {
+          headerNav.classList.remove('active');
+        }
+      });
+    });
+  }
+})();
+
+
+(function() {
+  const dropdownBtn = document.getElementById('accountDropdown');
+  const dropdownMenu = document.getElementById('accountMenu');
+  
+  if (dropdownBtn && dropdownMenu) {
+    dropdownBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle('active');
+      dropdownBtn.classList.toggle('active');
+    });
+    
+    document.addEventListener('click', function(event) {
+      if (!dropdownBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.remove('active');
+        dropdownBtn.classList.remove('active');
+      }
+    });
+    
+    const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', function() {
+        dropdownMenu.classList.remove('active');
+        dropdownBtn.classList.remove('active');
+      });
+    });
+  }
+})();
+</script>
+    
+</body>
+</html>
+
+
+<footer style="text-align: center; padding: 15px; background: transparent; color: #ccc; font-size: 0.9rem; margin-top: 40px;">
+  <p> 2025 AnxieTea — A space for calm minds. Find you answers HERE</p>
+</footer>

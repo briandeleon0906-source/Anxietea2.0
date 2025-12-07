@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <title>Anxietea - Home</title>
+    <style>
+:root {
+  --gap: 1.25rem;
+  --speed: 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --closed: 5rem;
+  --open: 30rem;
+  --accent: #1a0802;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, sans-serif;
+  background: #1a1a1a url(cliff.jpg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #c5c7ce;
+  position: relative;
+  padding-top: 70px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Slider Styles */
+.slider {
+  max-width: 100%;
+  margin: auto;
+  overflow: visible;
+  position: relative;
+}
+
+.slider .nav-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.slider .nav-btn:hover {
+  background: var(--accent);
+}
+
+.slider .nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.track {
+  display: flex;
+  gap: var(--gap);
+  align-items: flex-start;
+  justify-content: center;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 40px;
+}
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.project-card {
+  position: relative;
+  flex: 0 0 var(--closed);
+  height: 26rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex-basis var(--speed), transform var(--speed);
+}
+.project-card[active] {
+  flex-basis: var(--open);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.45);
+}
+.project-card__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75) saturate(75%);
+  transition: filter 0.3s, transform var(--speed);
+}
+.project-card:hover .project-card__bg {
+  filter: brightness(0.9) saturate(100%);
+  transform: scale(1.06);
+}
+
+.project-card__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0;
+  background: linear-gradient(transparent 40%, rgba(0, 0, 0, 0.85) 100%);
+  z-index: 2;
+}
+.project-card__title {
+  color: #2c0303;
+  font-weight: 700;
+  font-size: 1.35rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+
+}
+.project-card__thumb,
+.project-card__desc,
+.project-card__btn {
+  display: none;
+}
+
+.project-card[active] .project-card__content {
+  flex-direction: row;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  gap: 1.1rem;
+}
+.project-card[active] .project-card__title {
+  writing-mode: horizontal-tb;
+  transform: none;
+  font-size: 2.4rem;
+}
+.project-card[active] .project-card__thumb,
+.project-card[active] .project-card__desc,
+.project-card[active] .project-card__btn {
+  display: block;
+}
+
+.project-card__thumb {
+  width: 133px;
+  height: 269px;
+  border-radius: 0.45rem;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(8, 58, 1, 0.4);
+}
+.project-card__desc {
+  color: #070d3f;
+  font-size: 1rem;
+  line-height: 1.4;
+  max-width: 16rem;
+  font-weight: bold
+
+ 
+}
+.project-card__btn {
+  padding: 0.55rem 1.3rem;
+  border: none;
+  border-radius: 9999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.project-card__btn:hover {  
+  background: #ff824f;
+}
+
+.dots {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 20px 0;
+}
+.dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.dot.active {
+  background: var(--accent);
+  transform: scale(1.2);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --closed: 4rem;
+    --open: 22rem;
+  }
+  .track {
+    flex-direction: column;
+    scroll-snap-type: y mandatory;
+    align-items: center;
+    justify-content: flex-start;
+    padding-bottom: 0;
+  }
+  .project-card {
+    height: 20rem;
+  }
+  .project-card__title {
+    font-size: 1.1rem;
+    writing-mode: horizontal-tb;
+    transform: none;
+    text-align: center;
+    padding-inline: 0.3rem;
+  }
+  .nav-btn {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 767px) {
+  :root {
+    --closed: 100%;
+    --open: 100%;
+    --gap: 0.8rem;
+  }
+
+  .slider {
+    padding: 0 15px;
+  }
+
+  .track {
+    flex-direction: column;
+    scroll-snap-type: y mandatory;
+    gap: 0.8rem;
+    padding-bottom: 20px;
+  }
+
+  .project-card {
+    height: auto;
+    min-height: 80px;
+    flex: 0 0 auto;
+    width: 100%;
+    scroll-snap-align: start;
+  }
+
+  .project-card[active] {
+    min-height: 300px;
+    transform: none;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .project-card__content {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 1rem;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .project-card__title {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 1.2rem;
+    margin-right: auto;
+  }
+
+  .project-card__thumb,
+  .project-card__desc,
+  .project-card__btn {
+    display: none;
+  }
+
+  .project-card[active] .project-card__content {
+    align-items: flex-start;
+    padding: 1.5rem;
+  }
+
+  .project-card[active] .project-card__title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
+  .project-card[active] .project-card__thumb {
+    width: 200px;
+    height: 267px;
+    border-radius: 0.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-card[active] .project-card__desc {
+    font-size: 0.95rem;
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .project-card[active] .project-card__btn {
+    align-self: center;
+    width: 100%;
+    text-align: center;
+    padding: 0.7rem;
+  }
+
+  .dots {
+    display: none;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 15px 20px;
+  }
+
+  .nav-btn {
+    position: static;
+    transform: none;
+  }
+}
+
+
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 12px 20px;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 20px;
+  min-height: 70px;
+  box-sizing: border-box;
+}
+
+.header-logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.header-nav {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 1;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.header-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.header .nav-btn {
+  padding: 8px 16px;
+  background: rgba(44, 3, 3, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.header .nav-btn:hover {
+  background: rgba(44, 3, 3, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.header .nav-btn.active {
+  background: rgba(44, 3, 3, 1);
+}
+
+/* Dropdown Menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  padding: 8px 16px;
+  background: rgba(44, 3, 3, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dropdown-btn:hover {
+  background: rgba(44, 3, 3, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-btn.active {
+  background: rgba(44, 3, 3, 1);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  min-width: 150px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1001;
+  padding: 5px 0;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.dropdown-item.active {
+  background: rgba(26, 8, 2, 0.3);
+  color: #fff;
+}
+
+.menu-toggle {
+  display: none;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header {
+    padding: 12px 15px;
+    gap: 15px;
+  }
+  
+  .header-nav {
+    gap: 6px;
+  }
+  
+  .header .nav-btn {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 60px;
+  }
+  
+  .header {
+    padding: 12px 15px;
+    min-height: 60px;
+  }
+  
+  .header-logo {
+    font-size: 1.2rem;
+  }
+  
+  .menu-toggle {
+    display: flex;
+    flex-shrink: 0;
+    z-index: 1001;
+  }
+  
+  .header-nav {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  .header-nav.active {
+    transform: translateX(0);
+  }
+  
+  .header .nav-btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+  
+  .dropdown {
+    width: 100%;
+  }
+  
+  .dropdown-btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+  
+  .dropdown-menu {
+    position: static;
+    width: 100%;
+    margin-top: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: none;
+    margin-top: 10px;
+  }
+  
+  .dropdown-menu.active {
+    display: block;
+  }
+  
+  .home-container {
+    padding: 30px 15px;
+  }
+  
+  .home-title {
+    font-size: 2rem;
+  }
+  
+  .home-subtitle {
+    font-size: 1rem;
+  }
+  
+  .features-title {
+    font-size: 1.5rem;
+  }
+  
+  .quote-container {
+    padding: 15px 20px;
+  }
+  
+  .quote-text {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
+  
+  .header-nav {
+    display: flex !important;
+    position: static;
+    transform: none;
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    padding: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .quote-text {
+    font-size: 1.2rem;
+  }
+  
+  .quote-author {
+    font-size: 1rem;
+  }
+}
+
+
+
+
+
+
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.home-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.home-title {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.home-subtitle {
+  color: #c5c7ce;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+
+.quote-section {
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.quote-container {
+  max-width: 600px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  border-left: 3px solid var(--accent);
+  padding: 20px 25px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.quote-container:hover {
+  background: rgba(0, 0, 0, 0.5);
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.quote-text {
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0 0 10px 0;
+  opacity: 0.95;
+}
+
+.quote-author {
+  color: #c5c7ce;
+  font-size: 0.9rem;
+  margin: 0;
+  text-align: right;
+  opacity: 0.8;
+}
+
+
+.features-section {
+  margin-bottom: 50px;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.features-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.slider-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+
+.activity-section {
+  margin-top: 50px;
+}
+
+.activity-header {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.bulletin-card {
+  background: rgba(161, 48, 48, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-left: 4px solid rgba(230, 152, 230, 0.5);
+}
+
+.bulletin-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: rgba(138, 43, 226, 0.9);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bulletin-title {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.bulletin-content {
+  color: #c5c7ce;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.bulletin-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #999;
+  font-size: 0.85rem;
+}
+
+.bulletin-meta .dot {
+  width: 4px;
+  height: 4px;
+  background: #999;
+  border-radius: 50%;
+}
+
+.activity-item {
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  transition:  0.3s ease;
+}
+
+.activity-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.activity-item.highlighted {
+  background: rgba(176, 196, 222, 0.1);
+}
+
+.activity-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #c5c7ce;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.activity-action .icon {
+  font-size: 1rem;
+}
+
+.activity-text {
+  color: #fff;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+
+@media (max-width: 992px) {
+  .activity-header {
+    font-size: 1.5rem;
+  }
+  
+  .bulletin-card {
+    padding: 15px;
+  }
+  
+  .bulletin-title {
+    font-size: 1rem;
+  }
+  
+  .activity-avatar {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+    </style>
+</head>
+
+<body>
+  <header class="header">
+    <a href="index.html" class="header-logo">Anxietea</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    <nav class="header-nav" id="headerNav">
+      <a href="index.html" class="nav-btn active">Home</a>
+      <a href="stories.html" class="nav-btn">Stories</a>
+      <a href="marketplace.html" class="nav-btn">Marketplace</a>
+      <a href="share.html" class="nav-btn">Share</a>
+      <a href="therapist.html" class="nav-btn">Therapist</a>
+      <a href="donate.html" class="nav-btn">Give Hope</a>
+      <div class="dropdown">
+        <button class="dropdown-btn" id="accountDropdown">Account ▼</button>
+        <div class="dropdown-menu" id="accountMenu">
+          <a href="about.html" class="dropdown-item">About</a>
+          <a href="settings.html" class="dropdown-item">Settings</a>
+          <a href="login.html" class="dropdown-item">Login</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="home-container">
+    <div class="home-header">
+      <h1 class="home-title">Welcome</h1>
+      <p class="home-subtitle">Your journey to better mental health starts here. Explore stories, connect with professionals, and find support in our community.</p>
+    </div>
+
+    <div class="quote-section">
+      <div class="quote-container">
+        <p class="quote-text" id="quoteText">"You are stronger than you think, and braver than you believe."</p>
+        <p class="quote-author" id="quoteAuthor">— pinaka poging creator</p>
+      </div>
+    </div>
+
+    <div class="features-section">
+      <div class="features-header">
+        <h2 class="features-title">Explore Our Features</h2>
+      </div>
+      
+      <div class="slider">
+        <div class="slider-controls">
+          <button id="prev" class="nav-btn" aria-label="Prev">‹</button>
+          <button id="next" class="nav-btn" aria-label="Next">›</button>
+        </div>
+        <div class="track" id="track">
+      <article class="project-card" active>
+        <img class="project-card__bg" src="stories.jpg" alt="">
+        <div class="project-card__content">
+          <img class="project-card__thumb" src="shareyourwins.jpg" alt="">
+          <div>
+            <h3 class="project-card__title">Stories</h3>
+              <p class="project-card__desc">Stories of people who has the same situation like you.</p>
+                <a href="stories.html">
+                  <button class="project-card__btn">Details</button>
+                </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <img class="project-card__bg" src="untetheredsouldbook.jpg" alt="">
+        <div class="project-card__content">
+          <img class="project-card__thumb" src="untetheredsouldbook.jpg" alt="">
+          <div>
+            <h3 class="project-card__title">Marketplace</h3>
+            <p class="project-card__desc">Buy or sell a book. a bookookook kurikuk</p>
+              <a href="marketplace.html">
+                <button class="project-card__btn">Details</button>
+              </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <img class="project-card__bg" src="shareyourwins.jpg" alt="">
+        <div class="project-card__content">
+          <img class="project-card__thumb" src="sharewin2.jpg" alt="">
+          <div>
+            <h3 class="project-card__title">Share</h3>
+              <p class="project-card__desc">Share your stories to inspire others.</p>
+                <a href="share.html">
+                  <button class="project-card__btn">Details</button>
+                </a>
+          </div>
+        </div>
+      </article>
+
+
+
+      <article class="project-card">
+    <img class="project-card__bg" src="mentalexperts2.jpg" alt="">
+    <div class="project-card__content">
+        <img class="project-card__thumb" src="understandinglowselfesteem2.png" alt="">
+        <div>
+            <h3 class="project-card__title">Therapist</h3>
+            <p class="project-card__desc">Find mental health professionals who can help.</p>
+            <a href="therapist.html">
+                <button class="project-card__btn">Details</button>
+            </a>
+        </div>
+    </div>
+</article>
+
+
+
+      <article class="project-card">
+        <img class="project-card__bg" src="untetheredsouldbook.jpg" alt="">
+        <div class="project-card__content">
+          <img class="project-card__thumb" src="untetheredsouldbook.jpg" alt="">
+          <div>
+            <h3 class="project-card__title">Give Hope</h3>
+            <p class="project-card__desc">Creative control at every stage.</p>
+            <a href="donate.html">
+            <button class="project-card__btn">Details</button>
+            </a>
+          </div>
+        </div>
+      </article>
+
+        </div>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+  </div>
+
+  <div class="home-container">
+    <section class="activity-section" id="photos">
+        <h2 class="activity-header">Community activity</h2>
+        
+        <!-- Latest Bulletin -->
+        <div class="bulletin-card">
+            <div class="bulletin-header">
+                <span>🚀</span>
+                <span>LATEST BULLETIN</span>
+            </div>
+            <div style="display: flex; gap: 15px; align-items: flex-start;">
+                <img src="monggoloid.jpg" alt="Peter R." class="activity-avatar" style="width: 50px; height: 50px;">
+                <div style="flex: 1;">
+                    <h3 class="bulletin-title">Reminder: Pasahan na ng website (Sunday, December 12th at 12:00PM)</h3>
+                    <p class="bulletin-content">Kapag hindi nakapag pasa boom tanggal. Ulit nalang next year</p>
+                    <div class="bulletin-meta">
+                        <span>by Nikulangot.</span>
+                        <span class="dot"></span>
+                        <span>2 days ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-item">
+            <img src="monggoloid2.jpg" alt="Samantha N." class="activity-avatar">
+            <div class="activity-content">
+                <div class="activity-action">
+                    <span class="icon">💬</span>
+                    <span>Bunso replied to Nikulangot's comment</span>
+                </div>
+                <div class="activity-text">Sanaol tapos na sa website</div>
+            </div>
+        </div>
+
+        <div class="activity-item highlighted">
+            <img src="monggoloid3.jpg" alt="Jasmine S." class="activity-avatar">
+            <div class="activity-content">
+                <div class="activity-action">
+                    <span class="icon">⭐</span>
+                    <span>Eyys</span>
+                </div>
+                <div class="activity-text">Tara mang-inasal nalang tayo...</div>
+            </div>
+        </div>
+
+        <div class="activity-item">
+            <img src="monggoloid3.jpg" alt="Jasmine S." class="activity-avatar">
+            <div class="activity-content">
+                <div class="activity-action">
+                    <span class="icon">💬</span>
+                    <span>replied to his comment</span>
+                </div>
+                <div class="activity-text">Ayaw nyo?Edi wag...</div>
+            </div>
+        </div>
+
+        <div class="activity-item highlighted">
+            <img src="bruno.jpg" alt="Darren O." class="activity-avatar">
+            <div class="activity-content">
+                <div class="activity-action">
+                    <span class="icon">⭐</span>
+                    <span>Tapos na sa Website</span>
+                </div>
+                <div class="activity-text">Tolongan ko kayu basta kiss nyu ku.</div>
+            </div>
+        </div>
+
+        <div class="activity-item">
+            <img src="monggoloid.jpg" alt="Nicola P." class="activity-avatar">
+            <div class="activity-content">
+                <div class="activity-action">
+                    <span class="icon">💬</span>
+                    <span>Nikulangot replied to Ken's comment</span>
+                </div>
+                <div class="activity-text">Kiss mo pwet ko</div>
+            </div>
+        </div>
+
+        <div class="activity-item">
+            <img src="sadboi.jpg" alt="Sophie G." class="activity-avatar">
+            <div class="activity-content">
+                <div class="activity-action">
+                    <span class="icon">💬</span>
+                    <span>Miel replied to Ken's Comment</span>
+                </div>
+                <div class="activity-text">Hindi website natapos ko e, relasyon namin :(</div>
+            </div>
+        </div>
+    </section>
+  </div>
+
+<script>
+(() => {
+  const track = document.getElementById("track");
+  const wrap = track.parentElement;
+  const cards = Array.from(track.children);
+  const prev = document.getElementById("prev");
+  const next = document.getElementById("next");
+  const dotsBox = document.getElementById("dots");
+
+  const isMobile = () => matchMedia("(max-width:767px)").matches;
+
+  cards.forEach((_, i) => {
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    dot.onclick = () => activate(i, true);
+    dotsBox.appendChild(dot);
+  });
+  const dots = Array.from(dotsBox.children);
+
+  let current = 0;
+
+  function center(i) {
+    const card = cards[i];
+    const axis = isMobile() ? "top" : "left";
+    const size = isMobile() ? "clientHeight" : "clientWidth";
+    const start = isMobile() ? card.offsetTop : card.offsetLeft;
+    wrap.scrollTo({
+      [axis]: start - (wrap[size] / 2 - card[size] / 2),
+      behavior: "smooth"
+    });
+  }
+
+  function toggleUI(i) {
+    cards.forEach((c, k) => c.toggleAttribute("active", k === i));
+    dots.forEach((d, k) => d.classList.toggle("active", k === i));
+    prev.disabled = i === 0;
+    next.disabled = i === cards.length - 1;
+  }
+
+  function activate(i, scroll) {
+    if (i === current) return;
+    current = i;
+    toggleUI(i);
+    if (scroll) center(i);
+  }
+
+  function go(step) {
+    activate(Math.min(Math.max(current + step, 0), cards.length - 1), true);
+  }
+
+  prev.onclick = () => go(-1);
+  next.onclick = () => go(1);
+
+  addEventListener(
+    "keydown",
+    (e) => {
+      if (["ArrowRight", "ArrowDown"].includes(e.key)) go(1);
+      if (["ArrowLeft", "ArrowUp"].includes(e.key)) go(-1);
+    },
+    { passive: true }
+  );
+
+  cards.forEach((card, i) => {
+    card.addEventListener(
+      "mouseenter",
+      () => matchMedia("(hover:hover)").matches && activate(i, true)
+    );
+    card.addEventListener("click", () => activate(i, true));
+  });
+
+  let sx = 0,
+    sy = 0;
+  track.addEventListener(
+    "touchstart",
+    (e) => {
+      sx = e.touches[0].clientX;
+      sy = e.touches[0].clientY;
+    },
+    { passive: true }
+  );
+
+  track.addEventListener(
+    "touchend",
+    (e) => {
+      const dx = e.changedTouches[0].clientX - sx;
+      const dy = e.changedTouches[0].clientY - sy;
+      if (isMobile() ? Math.abs(dy) > 60 : Math.abs(dx) > 60)
+        go((isMobile() ? dy : dx) > 0 ? -1 : 1);
+    },
+    { passive: true }
+  );
+  if (window.matchMedia("(max-width:767px)").matches) dotsBox.hidden = true;
+
+  addEventListener("resize", () => center(current));
+
+  toggleUI(0);
+  center(0);
+})();
+
+
+$(document).ready(function () {
+  $('.sidenav').sidenav();
+  $('.materialboxed').materialbox();
+  $('.parallax').parallax();
+  $('.tabs').tabs();
+  $('.tooltipped').tooltip();
+  $('.scrollspy').scrollSpy();
+  $('.datepicker').datepicker({
+    disableWeekends: true,
+    yearRange: 1
+  });
+});
+
+
+(function() {
+  const menuToggle = document.getElementById('menuToggle');
+  const headerNav = document.getElementById('headerNav');
+  
+  if (menuToggle && headerNav) {
+    menuToggle.addEventListener('click', function() {
+      headerNav.classList.toggle('active');
+    });
+    
+    document.addEventListener('click', function(event) {
+      if (!menuToggle.contains(event.target) && !headerNav.contains(event.target)) {
+        headerNav.classList.remove('active');
+      }
+    });
+    
+    const navLinks = headerNav.querySelectorAll('.nav-btn');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 768) {
+          headerNav.classList.remove('active');
+        }
+      });
+    });
+  }
+})();
+
+
+(function() {
+  const dropdownBtn = document.getElementById('accountDropdown');
+  const dropdownMenu = document.getElementById('accountMenu');
+  
+  if (dropdownBtn && dropdownMenu) {
+    dropdownBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle('active');
+      dropdownBtn.classList.toggle('active');
+    });
+    
+    document.addEventListener('click', function(event) {
+      if (!dropdownBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.remove('active');
+        dropdownBtn.classList.remove('active');
+      }
+    });
+    
+    const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', function() {
+        dropdownMenu.classList.remove('active');
+        dropdownBtn.classList.remove('active');
+      });
+    });
+  }
+})();
+
+</script>
+    
+</body>
+</html>
+
+<footer style="text-align: center; padding: 15px; background: transparent; color: #ccc; font-size: 0.9rem; margin-top: 40px;">
+  <p> 2025 AnxieTea — A space for calm minds. Find you answers HERE</p>
+</footer>
