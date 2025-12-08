@@ -372,34 +372,27 @@ body::before {
 
 .header-nav {
   display: flex;
-  gap: 8px;
+  gap: 15px;
   align-items: center;
-  flex-shrink: 1;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.header-nav::-webkit-scrollbar {
-  display: none;
+  flex-shrink: 0;
 }
 
 .header .nav-btn {
-  padding: 8px 16px;
+  padding: 10px 20px;
   background: rgba(44, 3, 3, 0.8);
   color: #fff;
   border: none;
   border-radius: 6px;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
   display: inline-block;
   white-space: nowrap;
-  flex-shrink: 0;
+}
+.header-nav::-webkit-scrollbar {
+  display: none;
 }
 
 .header .nav-btn:hover {
@@ -469,6 +462,7 @@ body::before {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+  position: absolute;
 }
 
 .dropdown-item {
@@ -509,30 +503,9 @@ body::before {
   justify-content: center;
 }
 
-@media (max-width: 1024px) and (min-width: 769px) {
-  .header {
-    padding: 12px 15px;
-    gap: 15px;
-  }
-  
-  .header-nav {
-    gap: 6px;
-  }
-  
-  .header .nav-btn {
-    padding: 8px 14px;
-    font-size: 0.85rem;
-  }
-}
-
 @media (max-width: 768px) {
-  body {
-    padding-top: 60px;
-  }
-  
   .header {
     padding: 12px 15px;
-    min-height: 60px;
   }
   
   .header-logo {
@@ -569,7 +542,6 @@ body::before {
     width: 100%;
     text-align: center;
     padding: 12px 20px;
-    font-size: 0.95rem;
   }
   
   .dropdown {
@@ -597,6 +569,23 @@ body::before {
   .dropdown-menu.active {
     display: block;
   }
+}
+
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
+  
+  .header-nav {
+    display: flex !important;
+    position: static;
+    transform: none;
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    padding: 0;
+  }
+}
   
   .home-container {
     padding: 30px 15px;
@@ -621,7 +610,7 @@ body::before {
   .quote-text {
     font-size: 1rem;
   }
-}
+
 
 @media (min-width: 769px) {
   .menu-toggle {
@@ -889,7 +878,8 @@ body::before {
       <a href="marketplace.html" class="nav-btn">Marketplace</a>
       <a href="share.html" class="nav-btn">Share</a>
       <a href="therapist.html" class="nav-btn">Therapist</a>
-      <a href="donate.html" class="nav-btn">Give Hope</a>
+      <a href="donate.html" class="nav-btn">Give Hope</a> 
+    
       <div class="dropdown">
         <button class="dropdown-btn" id="accountDropdown">Account ▼</button>
         <div class="dropdown-menu" id="accountMenu">
@@ -991,7 +981,7 @@ body::before {
           <img class="project-card__thumb" src="untetheredsouldbook.jpg" alt="">
           <div>
             <h3 class="project-card__title">Give Hope</h3>
-            <p class="project-card__desc">Creative control at every stage.</p>
+            <p class="project-card__desc">Giving hope to thedda wkjnkln alnwlfknangamsaca</p>
             <a href="donate.html">
             <button class="project-card__btn">Details</button>
             </a>
@@ -1195,20 +1185,6 @@ body::before {
   toggleUI(0);
   center(0);
 })();
-
-
-$(document).ready(function () {
-  $('.sidenav').sidenav();
-  $('.materialboxed').materialbox();
-  $('.parallax').parallax();
-  $('.tabs').tabs();
-  $('.tooltipped').tooltip();
-  $('.scrollspy').scrollSpy();
-  $('.datepicker').datepicker({
-    disableWeekends: true,
-    yearRange: 1
-  });
-});
 
 
 (function() {
